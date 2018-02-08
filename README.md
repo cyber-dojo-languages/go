@@ -1,5 +1,5 @@
-# go 1.9.4
+# Go
 
-![Build Status](https://travis-ci.org/cyber-dojo-languages/go-1.9.4.svg?branch=master)
+![Build Status](https://travis-ci.org/cyber-dojo-languages/go.svg?branch=master)
 
-Base docker-image for Go test-frameworks.
+Version=1.9.4
