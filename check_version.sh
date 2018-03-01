@@ -1,8 +1,13 @@
 #!/bin/bash
 set -e
 
+readonly REGEX="image_name\": \"(.*)\""
+readonly JSON=`cat docker/image_name.json`
+[[ ${JSON} =~ ${REGEX} ]]
+readonly IMAGE_NAME="${BASH_REMATCH[1]}"
+
 readonly EXPECTED=$(cat README.md | grep Version | cut -d'=' -f2 | cut -d']' -f1)
-readonly ACTUAL=$(docker run --rm -it cyberdojofoundation/go sh -c 'go version')
+readonly ACTUAL=$(docker run --rm -it ${IMAGE_NAME} sh -c 'go version')
 
 if echo ${ACTUAL} | grep -q ${EXPECTED}; then
   echo "VERSION CONFIRMED as ${EXPECTED}"
