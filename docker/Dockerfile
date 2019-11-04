@@ -11,12 +11,11 @@ ENV GOLANG_VERSION 1.13.4
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
     ca-certificates \
+    git \
 	; \
 	wget -O go.tgz "https://dl.google.com/go/go$GOLANG_VERSION.linux-amd64.tar.gz"; \
 	tar -C /usr/local -xzf go.tgz; \
 	rm go.tgz; \
-	\
-	apk del .build-deps; \
 	\
 	export PATH="/usr/local/go/bin:$PATH"; \
 	go version
