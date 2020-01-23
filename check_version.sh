@@ -1,5 +1,4 @@
-#!/bin/bash
-set -e
+#!/bin/bash -Eeu
 
 readonly REGEX="image_name\": \"(.*)\""
 readonly JSON=`cat docker/image_name.json`

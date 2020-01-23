@@ -1,29 +1,14 @@
-FROM cyberdojofoundation/alpine_glibc
+FROM alpine:latest
 LABEL maintainer=jon@jaggersoft.com
 
-# Borrowing heavily from
-# https://github.com/docker-library/golang/blob/f30f0428221b94c7dcb414ebdcea83106df20897/1.13/alpine3.10/Dockerfile
+RUN apk add --no-cache git make musl-dev go
 
-# set up nsswitch.conf for Go's "netgo" implementation
-# - https://github.com/golang/go/blob/go1.9.1/src/net/conf.go#L194-L275
-# - docker run --rm debian:stretch grep '^hosts:' /etc/nsswitch.conf
-RUN  echo 'hosts: files dns' > /etc/nsswitch.conf
-
-ENV GOLANG_VERSION 1.13.4
-
-RUN set -eux; \
-	apk add --no-cache --virtual .build-deps \
-    ca-certificates \
-    git \
-	; \
-	wget -O go.tgz "https://dl.google.com/go/go$GOLANG_VERSION.linux-amd64.tar.gz"; \
-	tar -C /usr/local -xzf go.tgz; \
-	rm go.tgz; \
-	\
-	export PATH="/usr/local/go/bin:$PATH"; \
-	go version
-
+# Configure Go
+ENV GOROOT /usr/lib/go
 ENV GOPATH /go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+ENV PATH /go/bin:$PATH
 
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
+
+# Install Glide
+RUN go get -u github.com/Masterminds/glide/...
