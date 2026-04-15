@@ -7,7 +7,7 @@ readonly JSON=`cat docker/image_name.json`
 readonly IMAGE_NAME="${BASH_REMATCH[1]}"
 
 readonly MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-readonly EXPECTED=1.26.1
+readonly EXPECTED=1.26
 readonly ACTUAL=$(docker run --rm -i ${IMAGE_NAME} sh -c 'go version')
 
 if echo "${ACTUAL}" | grep -q "${EXPECTED}"; then
